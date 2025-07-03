@@ -6,89 +6,11 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:07:28 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/03 20:19:07 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:50:57 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	sort_three(t_stack *a)
-{
-	int	fst;
-	int	snd;
-	int	trd;
-
-	fst = a->top->value;
-	snd = a->top->next->value;
-	trd = a->top->next->next->value;
-	if (fst > snd && fst < trd) // 213
-		op_sa(a);
-	else if (fst > snd && snd > trd) // 321
-	{
-		op_sa(a);
-		op_rra(a);
-	}
-	else if (fst > trd && snd < trd) // 312
-		op_ra(a);
-	else if (fst < trd && snd > trd) // 132
-	{
-		op_sa(a);
-		op_ra(a);
-	}
-	else if (fst > trd && fst < snd) // 231
-		op_rra(a);
-}
-
-void	sort_five(t_stack **a, t_stack **b)
-{
-	int		min;
-	t_node	*cur;
-	int		index;
-	int		i;
-
-	min = (*a)->top->value;
-	cur = (*a)->top;
-	index = 0;
-	i = 0;
-	while ((*a)->size > 3)
-	{
-		while (cur)
-		{
-			if (cur->value < min)
-			{
-				min = cur->value;
-				index = i;
-			}
-			cur = cur->next;
-			i++;
-		}
-		if (index == 1)
-			op_ra(*a);
-		else if (index == 2 && (*a)->size == 4)
-		{
-			op_ra(*a);
-			op_ra(*a);
-		}
-		else if (index == 2)
-		{
-			op_ra(*a);
-			op_ra(*a);
-		}
-		else if (index == 3)
-		{
-			op_ra(*a);
-			op_ra(*a);
-		}
-		else if (index == 4)
-		{
-			op_rra(*a);
-		}
-		op_pb(a, b);
-	}
-	sort_three(*a);
-	while (*b)
-		op_pa(a, b);
-}
 
 void	op_sa(t_stack *a)
 {
@@ -164,6 +86,81 @@ void	op_rra(t_stack *a)
 // 	op_sb(b);
 // 	write(1, "ss\n", 3);
 // }
+
+void	sort_three(t_stack *a)
+{
+	int	fst;
+	int	snd;
+	int	trd;
+
+	fst = a->top->value;
+	snd = a->top->next->value;
+	trd = a->top->next->next->value;
+	if (fst > snd && fst < trd) // 213
+		op_sa(a);
+	else if (fst > snd && snd > trd) // 321
+	{
+		op_sa(a);
+		op_rra(a);
+	}
+	else if (fst > trd && snd < trd) // 312
+		op_ra(a);
+	else if (fst < trd && snd > trd) // 132
+	{
+		op_sa(a);
+		op_ra(a);
+	}
+	else if (fst > trd && fst < snd) // 231
+		op_rra(a);
+}
+
+void	rotate_top(t_stack **a, int idx)
+{
+	if (idx <= (*a)->size / 2)
+		while (idx-- > 0)
+			op_ra(*a);
+	else
+		while (idx++ < (*a)->size)
+			op_rra(*a);
+}
+
+int	find_min_index(t_stack **a)
+{
+	int		min;
+	t_node	*cur;
+	int		idx;
+	int		i;
+
+	min = (*a)->top->value;
+	cur = (*a)->top;
+	idx = 0;
+	i = 0;
+	while (cur)
+	{
+		if (cur->value < min)
+		{
+			min = cur->value;
+			idx = i;
+		}
+		cur = cur->next;
+		i++;
+	}
+}
+
+void	sort_five(t_stack **a, t_stack **b)
+{
+	int		idx;
+
+	while ((*a)->size > 3)
+	{
+		idx = find_min_index(*a);
+		rotate_top(a, idx);
+		op_pb(a, b);
+	}
+	sort_three(*a);
+	while (*b && (*b)->size)
+		op_pa(a, b);
+}
 
 void	sort_stack(t_stack **a, t_stack **b)
 {
