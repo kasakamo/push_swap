@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 16:53:26 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/06/25 19:03:57 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/06 17:28:42 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,16 @@ long	ft_atol(char *s)
 	res = 0;
 	sign = 1;
 	i = 0;
-	while (s[i])
+	if (s[i] == '-' || s[i] == '+')
 	{
 		if (s[i] == '-')
 			sign = -1;
+		i++;
+	}
+	while (s[i])
+	{
+		if (s[i] < '0' || '9' < s[i])
+			break ;
 		res = res * 10 + s[i] - '0';
 		i++;
 	}
