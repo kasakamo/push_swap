@@ -1,5 +1,52 @@
 #include "push_swap.h"
 
+int	node_idx(t_stack *a, t_node *n)
+{
+	t_node	*cur;
+	int	idx;
+
+	cur = a->top;
+	idx = 0;
+	while (cur && cur != n)
+	{
+		cur = cur->next;
+		idx++;
+	}
+	return (idx);
+}
+
+void	exe_move(t_stack **a, t_stack **b, t_node node)
+{
+	int	idx_a;
+	int	tgt_b;
+
+	if (!node)
+		return ;
+	idx_a = node_idx(*a, node);
+	tgt_b = target_idx(*b, node->value)
+	while (idx_a && tgt_b && idx_a <= (*a)->size / 2 && tgt_b <= (*b)->size / 2)
+	{
+		op_rr(*a, *b);
+		idx_a--;
+		tgt_b--;
+	}
+	while (idx_a && tgt_b && idx_a > (*a)->size / 2 && tgt_b > (*b)->size / 2)
+	{
+		op_rrr(*a. *b);
+		idx_a++;
+		tgt_b++;
+	}
+	while (idx_a-- > 0)
+		op_ra(*a);
+	while (idx_a++ < 0)
+		op_rra(*a);
+	while (tgt_b-- > 0)
+		op_rb(*b);
+	while (tgt_b++ < 0)
+		op_rrb(*b);
+	op_pb(a, b);
+}
+
 int	rot_cost(int size, int index)
 {
 	if (index <= size / 2)
@@ -97,7 +144,7 @@ void	sort_large(t_stack **a, t_stack **b)
 		move = best_move(*a, *b);
 		exe_move(a, b, move);
 	}
-	sort_three(a);
+	sort_three(*a);
 	while (*b && (*b)->size)
 		op_pa(a, b);
 }
