@@ -6,37 +6,39 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:07:28 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/06 20:45:37 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:38:19 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+int	get_max(t_stack *a)
+{
+	int		max;
+	t_node	*cur;
+
+	max = a->top->value;
+	cur = a->top;
+	while (cur)
+	{
+		if (max < cur->value)
+			max = cur->value;
+		cur = cur->next;
+	}
+	return (max);
+}
+
 void	sort_three(t_stack *a)
 {
-	int	fst;
-	int	snd;
-	int	trd;
+	int	max;
 
-	fst = a->top->value;
-	snd = a->top->next->value;
-	trd = a->top->next->next->value;
-	if (fst > snd && fst < trd)
+	max = get_max(a);
+	if (max == a->top->value)
+		op_ra(a, 1);
+	else if (max == a->top->next->value)
+		op_rra(a, 1);
+	if (a->top->value > a->top->next->value)
 		op_sa(a);
-	else if (fst > snd && snd > trd)
-	{
-		op_sa(a);
-		op_rra(a);
-	}
-	else if (fst > trd && snd < trd)
-		op_ra(a);
-	else if (fst < trd && snd > trd)
-	{
-		op_sa(a);
-		op_ra(a);
-	}
-	else if (fst > trd && fst < snd)
-		op_rra(a);
 }
 
 void	sort_stack(t_stack **a, t_stack **b)
@@ -50,8 +52,5 @@ void	sort_stack(t_stack **a, t_stack **b)
 	else if ((*a)->size <= 5)
 		sort_five(a, b);
 	else
-	{
-		comp_vals(*a);
 		sort_large(a, b);
-	}
 }

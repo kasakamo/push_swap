@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:25:20 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/07 12:52:39 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/07 17:13:13 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	op_sa(t_stack *a)
 
 	if (!a || a->size < 2)
 		return ;
-	f = (a)->top;
+	f = a->top;
 	s = f->next;
 	tmp = f->value;
 	f->value = s->value;
@@ -28,7 +28,7 @@ void	op_sa(t_stack *a)
 	write(1, "sa\n", 3);
 }
 
-void	op_ra(t_stack *a)
+void	op_ra(t_stack *a, int w)
 {
 	t_node	*first;
 	t_node	*last;
@@ -42,10 +42,11 @@ void	op_ra(t_stack *a)
 	while (last->next)
 		last = last->next;
 	last->next = first;
-	write(1, "ra\n", 3);
+	if (w)
+		write(1, "ra\n", 3);
 }
 
-void	op_rra(t_stack *a)
+void	op_rra(t_stack *a, int w)
 {
 	t_node	*prev;
 	t_node	*last;
@@ -62,7 +63,8 @@ void	op_rra(t_stack *a)
 	prev->next = NULL;
 	last->next = a->top;
 	a->top = last;
-	write(1, "rra\n", 4);
+	if (w)
+		write(1, "rra\n", 4);
 }
 
 void	op_pa(t_stack **a, t_stack **b)

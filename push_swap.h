@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 13:03:18 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/06 21:48:08 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:39:04 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdio.h>
 
 # ifndef BIT_SIZE
 #  define BIT_SIZE 31
@@ -57,21 +58,37 @@ int		is_sorted(t_stack *stack);
 
 void	sort_stack(t_stack **a, t_stack **b);
 void	sort_three(t_stack *a);
+int		get_max(t_stack *a);
 
 void	sort_five(t_stack **a, t_stack **b);
-int		find_min_index(t_stack **a);
-void	rotate_top(t_stack **a, int idx);
+int		find_min_index(t_stack *a);
+void	rotate_top(t_stack *a, int idx);
 
-void	comp_vals(t_stack *a);
-void	sort_arr(int *arr, int size);
-int		bin_search(int *arr, int size, int val);
 void	sort_large(t_stack **a, t_stack **b);
+t_node	*best_move(t_stack *s1, t_stack *s2);
+void	exe_move(t_stack **s1, t_stack **s2, t_node *node, int r);
+void	rotate_a(t_stack *a);
+
+int		target_idx(t_stack *s, int val);
+int		over_idx(t_node *cur, int val, int max);
+int		mid_idx(t_node *cur, int val);
+int		rot_cost(int size, int index);
+
+void	rotate_move(t_stack **a, t_stack **b, int idx_a, int tgt_b);
+void	rotate_return(t_stack **a, t_stack **b, int idx_b, int tgt_a);
+int		node_idx(t_stack *s, t_node *n);
 
 void	op_sa(t_stack *a);
-void	op_ra(t_stack *a);
-void	op_rra(t_stack *a);
+void	op_ra(t_stack *a, int w);
+void	op_rra(t_stack *a, int w);
 void	op_pa(t_stack **a, t_stack **b);
 
+void	op_sb(t_stack *b);
+void	op_rb(t_stack *b, int w);
+void	op_rrb(t_stack *b, int w);
 void	op_pb(t_stack **a, t_stack **b);
+
+void	op_rr(t_stack *a, t_stack *b);
+void	op_rrr(t_stack *a, t_stack *b);
 
 #endif

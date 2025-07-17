@@ -6,7 +6,7 @@
 #    By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/06 18:03:26 by kasakamo          #+#    #+#              #
-#    Updated: 2025/07/06 20:20:28 by kasakamo         ###   ########.fr        #
+#    Updated: 2025/07/07 17:26:30 by kasakamo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,10 @@ test_case() {
 		printf "${GREEN}OK${NC} (%d ops)\n" "$OPS"
 		OK=$((OK+1))
 	elif [ "$RESULT" = "KO" ]; then
-		echo "${RED}KO${NC}"
+		printf "${RED}KO${NC}\n"
 		KO=$((KO+1))
 	else
-		echo "${RED}Error${NC} ($RESULT)"
+		printf "${RED}Error${NC} ($RESULT)"
 		ERR=$((ERR+1))
 	fi
 }
@@ -81,13 +81,13 @@ test_case -2147483649	# INT_MIN - 1
 
 # --- Random 5 numbers ---
 for i in {1..5}; do
-	ARGS=$(shuf -i 1-100 -n 5 | tr '\n' ' ')
+	ARGS=$(shuf -i 1-100 -n 6 | tr '\n' ' ')
 	test_case "$ARGS"
 done
 
 # --- Random 100 (optional, slow) ---
-#ARGS=$(shuf -i 1-500 -n 100 | tr '\n' ' ')
-#test_case "$ARGS"
+ARGS=$(shuf -i 1-500 -n 100 | tr '\n' ' ')
+test_case "$ARGS"
 
 echo ""
 echo "✅ OK: $OK"

@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 16:53:26 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/06 17:28:42 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:05:15 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_new_digit(int *tab, int num, int sz)
 	while (i < sz)
 	{
 		if (tab[i] == num)
-		return (0);
+			return (0);
 		i++;
 	}
 	return (1);

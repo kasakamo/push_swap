@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:42:06 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/06 22:06:55 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:13:55 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	rotate_top(t_stack *a, int idx)
 {
 	if (idx <= a->size / 2)
 		while (idx-- > 0)
-			op_ra(a);
+			op_ra(a, 1);
 	else
 		while (idx++ < a->size)
-			op_rra(a);
+			op_rra(a, 1);
 }
 
 int	find_min_index(t_stack *a)
@@ -53,7 +53,7 @@ void	sort_five(t_stack **a, t_stack **b)
 	while ((*a)->size > 3)
 	{
 		idx = find_min_index(*a);
-		rotate_top(a, idx);
+		rotate_top(*a, idx);
 		op_pb(a, b);
 	}
 	sort_three(*a);
